@@ -104,7 +104,14 @@ class SeatAutoBooker:
         print(data)
         self.resp = requests.post(self.cfg["target"], data=data, headers=headers)
         self.json = json.loads(self.resp.text)
-        return self.json["CODE"], self.json["MESSAGE"] + " 座位:{}".format(seat)
+        code, msg = self._book_favorite_seat(user_config, seat_config, tried_times)
+
+if code != "ok":
+    logging.warning(f"预约失败：{msg}")
+    self.wechatNotice("预约失败提醒", msg)
+
+return code, msg
+
 
     def login(self):
         logging.info('Login in')
