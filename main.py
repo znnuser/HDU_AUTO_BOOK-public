@@ -86,6 +86,7 @@ class SeatAutoBooker:
                 time.sleep(retry_sleep_time)
 
 
+
     def _book_favorite_seat(self, user_config, seat_config, tried_times=0):
         logging.info('Entering _book_favorite_seat method')
         the_day_after_tomorrow = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][(datetime.now().weekday() + 2) % 7]
