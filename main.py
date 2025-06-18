@@ -78,11 +78,18 @@ class SeatAutoBooker:
         retry_sleep_time = timedelta(minutes=self.cfg["cron-delta-minutes"]).seconds*2/(self.cfg["max-retry"]-2) - 10
         for tried_times in range(self.cfg["max-retry"]):
             try:
-                return self._book_favorite_seat(user_config, seat_config, tried_times)
-            except Exception as e:
-                logging.exception(e)
-                print(e.__class__, "尝试第{}次".format(tried_times))
-                time.sleep(retry_sleep_time)
+                code, msg = self._book_favorite_seat(user_config, seat_config, tried_times)
+        
+                if code != "ok":
+                    logging.warning(f"预约失败：{msg}")
+                    self.wechatNotice("预约失败提醒", msg)
+
+        return code, msg
+    except Exception as e:
+        logging.exception(e)
+        print(e.__class__, "尝试第{}次".format(tried_times))
+        time.sleep(retry_sleep_time)
+
 
     def _book_favorite_seat(self, user_config, seat_config, tried_times=0):
         logging.info('Entering _book_favorite_seat method')
