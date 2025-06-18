@@ -68,8 +68,8 @@ class SeatAutoBooker:
             start_time = datetime.now().replace(hour=8-time_zone, minute=0, second=0, microsecond=0)
             end_time = datetime.now().replace(hour=10-time_zone, minute=15, second=0, microsecond=0)
         else:
-            start_time = datetime.now().replace(hour=21-time_zone, minute=0, second=0, microsecond=0)
-            end_time = datetime.now().replace(hour=21-time_zone, minute=15, second=0, microsecond=0)
+            start_time = datetime.now().replace(hour=8-time_zone, minute=0, second=0, microsecond=0)
+            end_time = datetime.now().replace(hour=10-time_zone, minute=15, second=0, microsecond=0)
         start_time = start_time - timedelta(minutes=self.cfg["cron-delta-minutes"])
         if datetime.now() < start_time or datetime.now() > end_time:
             logging.info('未到预约时间')
