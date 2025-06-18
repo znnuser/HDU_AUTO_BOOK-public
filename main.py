@@ -78,7 +78,7 @@ class SeatAutoBooker:
         retry_sleep_time = timedelta(minutes=self.cfg["cron-delta-minutes"]).seconds*2/(self.cfg["max-retry"]-2) - 10
         for tried_times in range(self.cfg["max-retry"]):
             try:
-                    logging.info('卡着了a')
+                logging.info('卡着了a')
                 return self._book_favorite_seat(user_config, seat_config, tried_times)
             except Exception as e:
                 logging.exception(e)
